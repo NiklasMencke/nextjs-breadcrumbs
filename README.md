@@ -15,10 +15,10 @@ npm install --save nextjs-breadcrumbs
 ```jsx
 import React, { Component } from 'react'
 
-import { useMyHook } from 'nextjs-breadcrumbs'
+import { Breadcrumbs } from 'nextjs-breadcrumbs'
 
 const Example = () => {
-  const example = useMyHook()
+  const example = Breadcrumbs()
   return (
     <div>{example}</div>
   )

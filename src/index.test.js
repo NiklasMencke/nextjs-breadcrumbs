@@ -1,12 +1,12 @@
-import { useMyHook } from './'
+import { Breadcrumbs } from './'
 import { renderHook, act } from "@testing-library/react-hooks";
 
 // mock timer using jest
 jest.useFakeTimers();
 
-describe('useMyHook', () => {
+describe('Breadcrumbs', () => {
   it('updates every second', () => {
-    const { result } = renderHook(() => useMyHook());
+    const { result } = renderHook(() => Breadcrumbs());
 
     expect(result.current).toBe(0);
 

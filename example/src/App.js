@@ -1,8 +1,8 @@
 import React from 'react'
-import { useMyHook } from 'nextjs-breadcrumbs'
+import { Breadcrumbs } from 'nextjs-breadcrumbs'
 
 const App = () => {
-  const example = useMyHook()
+  const example = Breadcrumbs()
   return (
     <div>
       {example}
