@@ -5,8 +5,16 @@ import Link from 'next/link';
 import { useRouter } from 'next/router';
 import './styles.css';
 
-const convertBreadcrumb = (string: string): string => {
-  return string
+/**
+ * Takes a breadcrumb title (from url path) and replaces
+ * special chars to more readable chars
+ *
+ * @param title - The breadcrumb title
+ * @returns The transformed title
+ *
+ */
+const convertBreadcrumb = (title: string): string => {
+  return title
     .replace(/-/g, ' ')
     .replace(/oe/g, 'ö')
     .replace(/ae/g, 'ä')
@@ -15,22 +23,49 @@ const convertBreadcrumb = (string: string): string => {
     .toUpperCase();
 };
 
-type Breadcrumb = { breadcrumb: string; href: string };
+interface Breadcrumb {
+  /** Breadcrumb title. Example: 'blog-entries' */
+  breadcrumb: string;
 
-interface Props {
+  /** The URL which the breadcrumb points to. Example: 'blog/blog-entries' */
+  href: string;
+}
+
+interface BreadcrumbsProps {
+  /** If true, the default styles are used.
+   * Make sure to import the CSS in _app.js
+   * Example: true Default: false */
   useDefaultStyle?: boolean;
+
+  /** The title for the very first breadcrumb pointing to the root directory. Example: '/' Default: 'HOME' */
   rootLabel?: string | null;
+
+  /** An inline style object for the outer container */
   containerStyle?: any | null;
+
+  /** Classes to be used for the outer container. Won't be used if useDefaultStyle is true */
   containerClassName?: string;
+
+  /** An inline style object for the breadcrumb list */
   listStyle?: any | null;
+
+  /** Classes to be used for the breadcrumb list */
   listClassName?: string;
+
+  /** An inline style object for the inactive breadcrumb list item */
   inactiveItemStyle?: any | null;
+
+  /** Classes to be used for the inactive breadcrumb list item */
   inactiveItemClassName?: string;
+
+  /** An inline style object for the active breadcrumb list item */
   activeItemStyle?: any | null;
+
+  /** Classes to be used for the active breadcrumb list item */
   activeItemClassName?: string;
 }
 
-const defaultProps: Props = {
+const defaultProps: BreadcrumbsProps = {
   useDefaultStyle: false,
   rootLabel: 'HOME',
   containerStyle: null,
@@ -43,6 +78,19 @@ const defaultProps: Props = {
   activeItemClassName: '',
 };
 
+/**
+ * A functional React component for Next.js that renders a dynamic Breadcrumb navigation
+ * based on the current path within the Next.js router navigation.
+ *
+ * Only works in conjunction with Next.js, since it leverages the Next.js router.
+ *
+ * By setting useDefaultStyle to true, the default CSS will be used.
+ * The component is highly customizable by either custom classes or
+ * inline styles, which can be passed as props.
+ *
+ * @param props - object of type BreadcrumbsProps
+ * @returns The breadcrumb React component.
+ */
 const Breadcrumbs = ({
   useDefaultStyle,
   rootLabel,
@@ -54,7 +102,7 @@ const Breadcrumbs = ({
   inactiveItemClassName,
   activeItemStyle,
   activeItemClassName,
-}: Props) => {
+}: BreadcrumbsProps) => {
   const router = useRouter();
   const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(null);
 
