@@ -12,23 +12,19 @@ npm install --save nextjs-breadcrumbs
 
 ## Usage
 
-```jsx
+```tsx
 import React, { Component } from 'react'
 
-import { Breadcrumbs } from 'nextjs-breadcrumbs'
+import Breadcrumbs from 'nextjs-breadcrumbs'
+import 'nextjs-breadcrumbs/dist/index.css'
 
-const Example = () => {
-  const example = Breadcrumbs()
-  return (
-    <div>{example}</div>
-  )
+class Example extends Component {
+  render() {
+    return <Breadcrumbs />
+  }
 }
 ```
 
 ## License
 
 MIT © [NiklasMencke](https://github.com/NiklasMencke)
-
----
-
-This hook is created using [create-react-hook](https://github.com/hermanya/create-react-hook).
