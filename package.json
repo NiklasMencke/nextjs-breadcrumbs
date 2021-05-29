@@ -1,7 +1,7 @@
 {
   "name": "nextjs-breadcrumbs",
   "version": "1.0.0",
-  "description": "A dynamic breadcrumbs component for Next.js",
+  "description": "A dynamic, customizable breadcrumbs component for Next.js",
   "author": "NiklasMencke",
   "license": "MIT",
   "repository": "NiklasMencke/nextjs-breadcrumbs",
@@ -21,7 +21,6 @@
     "test:unit": "cross-env CI=1 react-scripts test --env=jsdom",
     "test:watch": "react-scripts test --env=jsdom",
     "predeploy": "cd example && yarn install && yarn run build",
-    "deploy": "gh-pages -d example/build",
     "docs": "typedoc src/index.tsx --plugin typedoc-plugin-markdown && concat-md --decrease-title-levels --dir-name-as-title docs > DOCUMENTATION.md"
   },
   "peerDependencies": {
