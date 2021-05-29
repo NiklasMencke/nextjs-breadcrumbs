@@ -1,23 +1,60 @@
 {
-  "parser": "babel-eslint",
+  "parser": "@typescript-eslint/parser",
   "extends": [
     "standard",
-    "standard-react"
+    "standard-react",
+    "plugin:prettier/recommended",
+    "prettier/standard",
+    "prettier/react",
+    "plugin:@typescript-eslint/eslint-recommended"
   ],
+  "plugins": ["react-hooks"],
   "env": {
-    "es6": true
+    "node": true
   },
-  "plugins": [
-    "react"
-  ],
   "parserOptions": {
-    "sourceType": "module"
+    "ecmaVersion": 2020,
+    "ecmaFeatures": {
+      "legacyDecorators": true,
+      "jsx": true
+    }
+  },
+  "settings": {
+    "react": {
+      "version": "16"
+    }
   },
   "rules": {
-    // don't force es6 functions to include space before paren
+    "semi": [2, "always"],
     "space-before-function-paren": 0,
-
-    // allow specifying true explicitly for boolean props
-    "react/jsx-boolean-value": 0
+    "react/prop-types": 0,
+    "react/jsx-handler-names": 0,
+    "react/jsx-fragments": 0,
+    "react/no-unused-prop-types": 0,
+    "import/export": 0,
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": [
+      "warn",
+      {
+        "additionalHooks": "useRecoilCallback"
+      }
+    ],
+    "no-unused-vars": "warn",
+    "prettier/prettier": [
+      "error",
+      {
+        "bracketSpacing": true,
+        "jsxBracketSameLine": true,
+        "singleQuote": true,
+        "trailingComma": "all",
+        "tabWidth": 2,
+        "printWidth": 100,
+        "arrowParens": "avoid",
+        "requirePragma": false,
+        "insertPragma": true,
+        "endOfLine": "auto",
+        "semi": true
+      }
+    ]
   }
 }
