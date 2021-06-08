@@ -131,8 +131,11 @@ const Breadcrumbs = ({
             <a>{rootLabel || 'HOME'}</a>
           </Link>
         </li>
-        {breadcrumbs.length > 1 &&
+        {breadcrumbs.length >= 1 &&
           breadcrumbs.map((breadcrumb, i) => {
+            if (!breadcrumb || breadcrumb.breadcrumb.length === 0) {
+              return;
+            }
             return (
               <li
                 key={breadcrumb.href}
