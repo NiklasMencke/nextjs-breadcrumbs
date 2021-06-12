@@ -13,14 +13,20 @@ import './styles.css';
  * @returns The transformed title
  *
  */
-const convertBreadcrumb = (title: string): string => {
-  return title
+const convertBreadcrumb = (
+  title: string,
+  upperLabel: boolean | undefined,
+): string => {
+  title = title
     .replace(/-/g, ' ')
     .replace(/oe/g, 'ö')
     .replace(/ae/g, 'ä')
     .replace(/ue/g, 'ü')
-    .replace(/\?.*/, '')
-    .toUpperCase();
+    .replace(/\?.*/, '');
+  if (upperLabel) {
+    title = title.toUpperCase();
+  }
+  return title;
 };
 
 interface Breadcrumb {
@@ -63,6 +69,9 @@ interface BreadcrumbsProps {
 
   /** Classes to be used for the active breadcrumb list item */
   activeItemClassName?: string;
+
+  /** If true, the label will be displayed on the upper case */
+  upperLabel?: boolean;
 }
 
 const defaultProps: BreadcrumbsProps = {
@@ -76,6 +85,7 @@ const defaultProps: BreadcrumbsProps = {
   inactiveItemClassName: '',
   activeItemStyle: null,
   activeItemClassName: '',
+  upperLabel: true,
 };
 
 /**
@@ -102,6 +112,7 @@ const Breadcrumbs = ({
   inactiveItemClassName,
   activeItemStyle,
   activeItemClassName,
+  upperLabel,
 }: BreadcrumbsProps) => {
   const router = useRouter();
   const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(null);
@@ -144,7 +155,7 @@ const Breadcrumbs = ({
                 }
                 style={i === breadcrumbs.length - 1 ? activeItemStyle : inactiveItemStyle}>
                 <Link href={breadcrumb.href}>
-                  <a>{convertBreadcrumb(breadcrumb.breadcrumb)}</a>
+                  <a>{convertBreadcrumb(breadcrumb.breadcrumb, upperLabel)}</a>
                 </Link>
               </li>
             );
