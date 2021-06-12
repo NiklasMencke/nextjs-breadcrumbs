@@ -16,7 +16,11 @@ import './styles.css';
 const convertBreadcrumb = (
   title: string,
   upperLabel: boolean | undefined,
+  customMapper: LabelMapDictionary | null | undefined,
 ): string => {
+  if (!!customMapper && customMapper[title]) {
+    title = customMapper[title];
+  }
   title = title
     .replace(/-/g, ' ')
     .replace(/oe/g, 'ö')
@@ -35,6 +39,10 @@ interface Breadcrumb {
 
   /** The URL which the breadcrumb points to. Example: 'blog/blog-entries' */
   href: string;
+}
+
+interface LabelMapDictionary {
+  [beforeConvert: string]: string;
 }
 
 interface BreadcrumbsProps {
@@ -70,6 +78,9 @@ interface BreadcrumbsProps {
   /** Classes to be used for the active breadcrumb list item */
   activeItemClassName?: string;
 
+  /** Mapper for customizing the labels that appear in the breadcrumbs */
+  labelMapper?: LabelMapDictionary | null;
+
   /** If true, the label will be displayed on the upper case */
   upperLabel?: boolean;
 }
@@ -85,6 +96,7 @@ const defaultProps: BreadcrumbsProps = {
   inactiveItemClassName: '',
   activeItemStyle: null,
   activeItemClassName: '',
+  labelMapper: null,
   upperLabel: true,
 };
 
@@ -112,6 +124,7 @@ const Breadcrumbs = ({
   inactiveItemClassName,
   activeItemStyle,
   activeItemClassName,
+  labelMapper,
   upperLabel,
 }: BreadcrumbsProps) => {
   const router = useRouter();
@@ -123,7 +136,10 @@ const Breadcrumbs = ({
       linkPath.shift();
 
       const pathArray = linkPath.map((path, i) => {
-        return { breadcrumb: path, href: '/' + linkPath.slice(0, i + 1).join('/') };
+        return {
+          breadcrumb: path,
+          href: '/' + linkPath.slice(0, i + 1).join('/'),
+        };
       });
 
       setBreadcrumbs(pathArray);
@@ -155,7 +171,7 @@ const Breadcrumbs = ({
                 }
                 style={i === breadcrumbs.length - 1 ? activeItemStyle : inactiveItemStyle}>
                 <Link href={breadcrumb.href}>
-                  <a>{convertBreadcrumb(breadcrumb.breadcrumb, upperLabel)}</a>
+                  <a>{convertBreadcrumb(breadcrumb.breadcrumb, upperLabel, labelMapper)}</a>
                 </Link>
               </li>
             );
