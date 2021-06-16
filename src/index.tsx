@@ -13,14 +13,14 @@ import './styles.css';
  * @returns The transformed title
  *
  */
-const convertBreadcrumb = (title: string): string => {
-  return title
+const convertBreadcrumb = (title: string, toUpperCase: boolean | undefined): string => {
+  const transformedTitle = title
     .replace(/-/g, ' ')
     .replace(/oe/g, 'ö')
     .replace(/ae/g, 'ä')
     .replace(/ue/g, 'ü')
-    .replace(/\?.*/, '')
-    .toUpperCase();
+    .replace(/\?.*/, '');
+  return toUpperCase ? transformedTitle.toUpperCase() : transformedTitle;
 };
 
 interface Breadcrumb {
@@ -39,6 +39,9 @@ interface BreadcrumbsProps {
 
   /** The title for the very first breadcrumb pointing to the root directory. Example: '/' Default: 'HOME' */
   rootLabel?: string | null;
+
+  /** Boolean indicator if the labels should be displayed as uppercase. Example: true Default: false */
+  labelsToUppercase?: boolean | undefined;
 
   /** An inline style object for the outer container */
   containerStyle?: any | null;
@@ -68,6 +71,7 @@ interface BreadcrumbsProps {
 const defaultProps: BreadcrumbsProps = {
   useDefaultStyle: false,
   rootLabel: 'HOME',
+  labelsToUppercase: false,
   containerStyle: null,
   containerClassName: '',
   listStyle: null,
@@ -94,6 +98,7 @@ const defaultProps: BreadcrumbsProps = {
 const Breadcrumbs = ({
   useDefaultStyle,
   rootLabel,
+  labelsToUppercase,
   containerStyle,
   containerClassName,
   listStyle,
@@ -144,7 +149,7 @@ const Breadcrumbs = ({
                 }
                 style={i === breadcrumbs.length - 1 ? activeItemStyle : inactiveItemStyle}>
                 <Link href={breadcrumb.href}>
-                  <a>{convertBreadcrumb(breadcrumb.breadcrumb)}</a>
+                  <a>{convertBreadcrumb(breadcrumb.breadcrumb, labelsToUppercase)}</a>
                 </Link>
               </li>
             );
