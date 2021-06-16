@@ -13,17 +13,24 @@ import './styles.css';
  * @returns The transformed title
  *
  */
-const convertBreadcrumb = (title: string, toUpperCase: boolean | undefined): string => {
-  const transformedTitle = title
+const convertBreadcrumb = (
+  title: string,
+  toUpperCase: boolean | undefined,
+  transformLabel: ((label: string) => string) | undefined,
+): string => {
+  let transformedTitle = title
     .replace(/-/g, ' ')
     .replace(/oe/g, 'ö')
     .replace(/ae/g, 'ä')
     .replace(/ue/g, 'ü')
     .replace(/\?.*/, '');
+  if (transformLabel) {
+    transformedTitle = transformLabel(title);
+  }
   return toUpperCase ? transformedTitle.toUpperCase() : transformedTitle;
 };
 
-interface Breadcrumb {
+export interface Breadcrumb {
   /** Breadcrumb title. Example: 'blog-entries' */
   breadcrumb: string;
 
@@ -31,7 +38,7 @@ interface Breadcrumb {
   href: string;
 }
 
-interface BreadcrumbsProps {
+export interface BreadcrumbsProps {
   /** If true, the default styles are used.
    * Make sure to import the CSS in _app.js
    * Example: true Default: false */
@@ -42,6 +49,9 @@ interface BreadcrumbsProps {
 
   /** Boolean indicator if the labels should be displayed as uppercase. Example: true Default: false */
   labelsToUppercase?: boolean | undefined;
+
+  /** A transformation function that allows to customize the label strings. Receives the label string and has to return a string */
+  transformLabel?: ((title: string) => string) | undefined;
 
   /** An inline style object for the outer container */
   containerStyle?: any | null;
@@ -70,8 +80,9 @@ interface BreadcrumbsProps {
 
 const defaultProps: BreadcrumbsProps = {
   useDefaultStyle: false,
-  rootLabel: 'HOME',
+  rootLabel: 'Home',
   labelsToUppercase: false,
+  transformLabel: undefined,
   containerStyle: null,
   containerClassName: '',
   listStyle: null,
@@ -99,6 +110,7 @@ const Breadcrumbs = ({
   useDefaultStyle,
   rootLabel,
   labelsToUppercase,
+  transformLabel,
   containerStyle,
   containerClassName,
   listStyle,
@@ -133,7 +145,7 @@ const Breadcrumbs = ({
       <ol style={listStyle} className={useDefaultStyle ? '_2jvtI' : listClassName}>
         <li style={inactiveItemStyle} className={inactiveItemClassName}>
           <Link href='/'>
-            <a>{rootLabel || 'HOME'}</a>
+            <a>{convertBreadcrumb(rootLabel || 'Home', labelsToUppercase, transformLabel)}</a>
           </Link>
         </li>
         {breadcrumbs.length >= 1 &&
@@ -149,7 +161,9 @@ const Breadcrumbs = ({
                 }
                 style={i === breadcrumbs.length - 1 ? activeItemStyle : inactiveItemStyle}>
                 <Link href={breadcrumb.href}>
-                  <a>{convertBreadcrumb(breadcrumb.breadcrumb, labelsToUppercase)}</a>
+                  <a>
+                    {convertBreadcrumb(breadcrumb.breadcrumb, labelsToUppercase, transformLabel)}
+                  </a>
                 </Link>
               </li>
             );

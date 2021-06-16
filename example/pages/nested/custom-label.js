@@ -4,7 +4,10 @@ import Breadcrumbs from 'nextjs-breadcrumbs'
 
 const App = () => {
   return (
-    <Breadcrumbs useDefaultStyle={true} transformLabel={(title) => title} />
+    <Breadcrumbs
+      useDefaultStyle={true}
+      transformLabel={(title) => title + ' Custom Label'}
+    />
   )
 }
 
