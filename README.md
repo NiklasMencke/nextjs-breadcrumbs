@@ -48,6 +48,19 @@ const Example = () => {
 };
 ```
 
+## Omit the root / home label
+
+It's possible to omit the root level entirely. This makes sense if you have an URL like https://website.com/home. If you wouldn't omit the root label in this case, the Breadcrumbs would show something like `/home/home`.
+
+```tsx
+import React from 'react';
+import Breadcrumbs from 'nextjs-breadcrumbs';
+
+const Example = () => {
+  return <Breadcrumbs omitRootLabel />;
+};
+```
+
 ## Custom styling (CSS)
 
 It's possible, to style each HTML element of this component separetely. This can be done either via inline styles or by assigning your own classes.

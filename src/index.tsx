@@ -47,6 +47,9 @@ export interface BreadcrumbsProps {
   /** The title for the very first breadcrumb pointing to the root directory. Example: '/' Default: 'HOME' */
   rootLabel?: string | null;
 
+  /** Boolean indicator whether the root label should be ommitted. Example: true Default: false */
+  omitRootLabel?: boolean;
+
   /** Boolean indicator if the labels should be displayed as uppercase. Example: true Default: false */
   labelsToUppercase?: boolean | undefined;
 
@@ -81,6 +84,7 @@ export interface BreadcrumbsProps {
 const defaultProps: BreadcrumbsProps = {
   useDefaultStyle: false,
   rootLabel: 'Home',
+  omitRootLabel: false,
   labelsToUppercase: false,
   transformLabel: undefined,
   containerStyle: null,
@@ -109,6 +113,7 @@ const defaultProps: BreadcrumbsProps = {
 const Breadcrumbs = ({
   useDefaultStyle,
   rootLabel,
+  omitRootLabel,
   labelsToUppercase,
   transformLabel,
   containerStyle,
@@ -143,11 +148,13 @@ const Breadcrumbs = ({
   return (
     <nav style={containerStyle} className={containerClassName} aria-label='breadcrumbs'>
       <ol style={listStyle} className={useDefaultStyle ? '_2jvtI' : listClassName}>
-        <li style={inactiveItemStyle} className={inactiveItemClassName}>
-          <Link href='/'>
-            <a>{convertBreadcrumb(rootLabel || 'Home', labelsToUppercase, transformLabel)}</a>
-          </Link>
-        </li>
+        {!omitRootLabel && (
+          <li style={inactiveItemStyle} className={inactiveItemClassName}>
+            <Link href='/'>
+              <a>{convertBreadcrumb(rootLabel || 'Home', labelsToUppercase, transformLabel)}</a>
+            </Link>
+          </li>
+        )}
         {breadcrumbs.length >= 1 &&
           breadcrumbs.map((breadcrumb, i) => {
             if (!breadcrumb || breadcrumb.breadcrumb.length === 0) {
