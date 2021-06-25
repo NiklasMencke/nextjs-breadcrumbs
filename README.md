@@ -124,6 +124,7 @@ Defined in: [index.tsx:38](https://github.com/NiklasMencke/nextjs-breadcrumbs/bl
 - [listClassName](#listclassname)
 - [listStyle](#liststyle)
 - [rootLabel](#rootlabel)
+- [omitRootLabel](#omitRootlabel)
 - [transformLabel](#transformlabel)
 - [useDefaultStyle](#usedefaultstyle)
 
@@ -224,6 +225,15 @@ Defined in: [index.tsx:63](https://github.com/NiklasMencke/nextjs-breadcrumbs/bl
 • `Optional` **rootLabel**: `null` \| _string_
 
 The title for the very first breadcrumb pointing to the root directory. Example: '/' Default: 'HOME'
+
+Defined in: [index.tsx:48](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L48)
+
+---
+#### omitRootLabel
+
+• `Optional` **omitRootLabel**: _boolean_
+
+Boolean indicator whether the root label should be ommitted. Example: true Default: false
 
 Defined in: [index.tsx:48](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L48)
 
