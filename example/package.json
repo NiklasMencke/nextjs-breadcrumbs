@@ -18,7 +18,7 @@
     "react-scripts": "link:../node_modules/react-scripts",
     "typescript": "link:../node_modules/typescript",
     "nextjs-breadcrumbs": "link:..",
-    "next": "^10.0.0"
+    "next": "^11.0.1"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"
