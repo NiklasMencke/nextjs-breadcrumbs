@@ -26,8 +26,8 @@ import React from 'react';
 import Breadcrumbs from 'nextjs-breadcrumbs';
 
 const Example = () => {
-  return <Breadcrumbs useDefaultStyle rootLabel="Home" />
-}
+  return <Breadcrumbs useDefaultStyle rootLabel='Home' />;
+};
 ```
 
 ## Custom label transformation
@@ -39,8 +39,13 @@ import React from 'react';
 import Breadcrumbs from 'nextjs-breadcrumbs';
 
 const Example = () => {
-  return <Breadcrumbs useDefaultStyle transformLabel={(title) => title + ' Custom Label'} />
-}
+  return (
+    <Breadcrumbs
+      useDefaultStyle
+      transformLabel={(title) => title + ' Custom Label'}
+    />
+  );
+};
 ```
 
 ## Custom styling (CSS)
@@ -52,7 +57,6 @@ It's possible, to style each HTML element of this component separetely. This can
 MIT © [NiklasMencke](https://github.com/NiklasMencke)
 
 # Interfaces
-
 
 <a name="interfacesbreadcrumbmd"></a>
 
@@ -71,22 +75,21 @@ MIT © [NiklasMencke](https://github.com/NiklasMencke)
 
 #### breadcrumb
 
-• **breadcrumb**: *string*
+• **breadcrumb**: _string_
 
 Breadcrumb title. Example: 'blog-entries'
 
 Defined in: [index.tsx:35](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L35)
 
-___
+---
 
 #### href
 
-• **href**: *string*
+• **href**: _string_
 
 The URL which the breadcrumb points to. Example: 'blog/blog-entries'
 
 Defined in: [index.tsx:38](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L38)
-
 
 <a name="interfacesbreadcrumbspropsmd"></a>
 
@@ -115,136 +118,135 @@ Defined in: [index.tsx:38](https://github.com/NiklasMencke/nextjs-breadcrumbs/bl
 
 #### activeItemClassName
 
-• `Optional` **activeItemClassName**: *string*
+• `Optional` **activeItemClassName**: _string_
 
 Classes to be used for the active breadcrumb list item
 
 Defined in: [index.tsx:78](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L78)
 
-___
+---
 
 #### activeItemStyle
 
-• `Optional` **activeItemStyle**: *any*
+• `Optional` **activeItemStyle**: _any_
 
 An inline style object for the active breadcrumb list item
 
 Defined in: [index.tsx:75](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L75)
 
-___
+---
 
 #### containerClassName
 
-• `Optional` **containerClassName**: *string*
+• `Optional` **containerClassName**: _string_
 
 Classes to be used for the outer container. Won't be used if useDefaultStyle is true
 
 Defined in: [index.tsx:60](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L60)
 
-___
+---
 
 #### containerStyle
 
-• `Optional` **containerStyle**: *any*
+• `Optional` **containerStyle**: _any_
 
 An inline style object for the outer container
 
 Defined in: [index.tsx:57](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L57)
 
-___
+---
 
 #### inactiveItemClassName
 
-• `Optional` **inactiveItemClassName**: *string*
+• `Optional` **inactiveItemClassName**: _string_
 
 Classes to be used for the inactive breadcrumb list item
 
 Defined in: [index.tsx:72](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L72)
 
-___
+---
 
 #### inactiveItemStyle
 
-• `Optional` **inactiveItemStyle**: *any*
+• `Optional` **inactiveItemStyle**: _any_
 
 An inline style object for the inactive breadcrumb list item
 
 Defined in: [index.tsx:69](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L69)
 
-___
+---
 
 #### labelsToUppercase
 
-• `Optional` **labelsToUppercase**: *boolean*
+• `Optional` **labelsToUppercase**: _boolean_
 
 Boolean indicator if the labels should be displayed as uppercase. Example: true Default: false
 
 Defined in: [index.tsx:51](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L51)
 
-___
+---
 
 #### listClassName
 
-• `Optional` **listClassName**: *string*
+• `Optional` **listClassName**: _string_
 
 Classes to be used for the breadcrumb list
 
 Defined in: [index.tsx:66](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L66)
 
-___
+---
 
 #### listStyle
 
-• `Optional` **listStyle**: *any*
+• `Optional` **listStyle**: _any_
 
 An inline style object for the breadcrumb list
 
 Defined in: [index.tsx:63](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L63)
 
-___
+---
 
 #### rootLabel
 
-• `Optional` **rootLabel**: ``null`` \| *string*
+• `Optional` **rootLabel**: `null` \| _string_
 
 The title for the very first breadcrumb pointing to the root directory. Example: '/' Default: 'HOME'
 
 Defined in: [index.tsx:48](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L48)
 
-___
+---
 
 #### transformLabel
 
-• `Optional` **transformLabel**: (`title`: *string*) => *string*
+• `Optional` **transformLabel**: (`title`: _string_) => _string_
 
 A transformation function that allows to customize the label strings. Receives the label string and has to return a string
 
 ##### Type declaration
 
-▸ (`title`: *string*): *string*
+▸ (`title`: _string_): _string_
 
 ##### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `title` | *string* |
+| Name    | Type     |
+| :------ | :------- |
+| `title` | _string_ |
 
-**Returns:** *string*
+**Returns:** _string_
 
 Defined in: [index.tsx:54](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L54)
 
-___
+---
 
 #### useDefaultStyle
 
-• `Optional` **useDefaultStyle**: *boolean*
+• `Optional` **useDefaultStyle**: _boolean_
 
 If true, the default styles are used.
-Make sure to import the CSS in _app.js
+Make sure to import the CSS in \_app.js
 Example: true Default: false
 
 Defined in: [index.tsx:45](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L45)
-
 
 <a name="modulesmd"></a>
 
@@ -271,7 +273,7 @@ Defined in: [index.tsx:45](https://github.com/NiklasMencke/nextjs-breadcrumbs/bl
 
 ### default
 
-• `Const` **default**: (`__namedParameters`: [*BreadcrumbsProps*](#interfacesbreadcrumbspropsmd)) => ``null`` \| *Element*
+• `Const` **default**: (`__namedParameters`: [_BreadcrumbsProps_](#interfacesbreadcrumbspropsmd)) => `null` \| _Element_
 
 A functional React component for Next.js that renders a dynamic Breadcrumb navigation
 based on the current path within the Next.js router navigation.
@@ -288,7 +290,7 @@ inline styles, which can be passed as props.
 
 #### Type declaration
 
-▸ (`__namedParameters`: [*BreadcrumbsProps*](#interfacesbreadcrumbspropsmd)): ``null`` \| *Element*
+▸ (`__namedParameters`: [_BreadcrumbsProps_](#interfacesbreadcrumbspropsmd)): `null` \| _Element_
 
 A functional React component for Next.js that renders a dynamic Breadcrumb navigation
 based on the current path within the Next.js router navigation.
@@ -301,22 +303,21 @@ inline styles, which can be passed as props.
 
 #### Parameters
 
-| Name | Type |
-| :------ | :------ |
-| `__namedParameters` | [*BreadcrumbsProps*](#interfacesbreadcrumbspropsmd) |
+| Name                | Type                                                |
+| :------------------ | :-------------------------------------------------- |
+| `__namedParameters` | [_BreadcrumbsProps_](#interfacesbreadcrumbspropsmd) |
 
-**Returns:** ``null`` \| *Element*
+**Returns:** `null` \| _Element_
 
 The breadcrumb React component.
 
-| Name | Type |
-| :------ | :------ |
-| `defaultProps` | [*BreadcrumbsProps*](#interfacesbreadcrumbspropsmd) |
+| Name           | Type                                                |
+| :------------- | :-------------------------------------------------- |
+| `defaultProps` | [_BreadcrumbsProps_](#interfacesbreadcrumbspropsmd) |
 
 Defined in: [index.tsx:109](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L109)
 
 # Modules
-
 
 <a name="modulesdefaultmd"></a>
 
@@ -334,4 +335,4 @@ Defined in: [index.tsx:109](https://github.com/NiklasMencke/nextjs-breadcrumbs/b
 
 #### defaultProps
 
-• **defaultProps**: [*BreadcrumbsProps*](#interfacesbreadcrumbspropsmd)
+• **defaultProps**: [_BreadcrumbsProps_](#interfacesbreadcrumbspropsmd)
