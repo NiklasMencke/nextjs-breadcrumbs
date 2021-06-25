@@ -48,6 +48,19 @@ const Example = () => {
 };
 ```
 
+## Omit the root / home label
+
+It's possible to omit the root level entirely. This makes sense if you have an URL like https://website.com/home. If you wouldn't omit the root label in this case, the Breadcrumbs would show something like `/home/home`.
+
+```tsx
+import React from 'react';
+import Breadcrumbs from 'nextjs-breadcrumbs';
+
+const Example = () => {
+  return <Breadcrumbs omitRootLabel />;
+};
+```
+
 ## Custom styling (CSS)
 
 It's possible, to style each HTML element of this component separetely. This can be done either via inline styles or by assigning your own classes.
@@ -111,6 +124,7 @@ Defined in: [index.tsx:38](https://github.com/NiklasMencke/nextjs-breadcrumbs/bl
 - [listClassName](#listclassname)
 - [listStyle](#liststyle)
 - [rootLabel](#rootlabel)
+- [omitRootLabel](#omitRootlabel)
 - [transformLabel](#transformlabel)
 - [useDefaultStyle](#usedefaultstyle)
 
@@ -211,6 +225,15 @@ Defined in: [index.tsx:63](https://github.com/NiklasMencke/nextjs-breadcrumbs/bl
 • `Optional` **rootLabel**: `null` \| _string_
 
 The title for the very first breadcrumb pointing to the root directory. Example: '/' Default: 'HOME'
+
+Defined in: [index.tsx:48](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L48)
+
+---
+#### omitRootLabel
+
+• `Optional` **omitRootLabel**: _boolean_
+
+Boolean indicator whether the root label should be ommitted. Example: true Default: false
 
 Defined in: [index.tsx:48](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L48)
 
