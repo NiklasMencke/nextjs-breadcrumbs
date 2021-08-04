@@ -6,6 +6,17 @@ import { useRouter } from 'next/router';
 import './styles.css';
 
 /**
+ * Takes an URL String and removes query params and hash params
+ *
+ * @param url - The URL string
+ * @returns The transformed URL string
+ *
+ */
+const getPathFromUrl = (url: string): string => {
+  return url.split(/[?#]/)[0];
+};
+
+/**
  * Takes a breadcrumb title (from url path) and replaces
  * special chars to more readable chars
  *
@@ -16,9 +27,10 @@ import './styles.css';
 const convertBreadcrumb = (
   title: string,
   toUpperCase: boolean | undefined,
-  transformLabel: ((label: string) => string) | undefined,
+  transformLabel: ((label: string) => string) | undefined
 ): string => {
-  let transformedTitle = title
+  let transformedTitle = getPathFromUrl(title);
+  transformedTitle = transformedTitle
     .replace(/-/g, ' ')
     .replace(/oe/g, 'ö')
     .replace(/ae/g, 'ä')
@@ -126,7 +138,8 @@ const Breadcrumbs = ({
   activeItemClassName,
 }: BreadcrumbsProps) => {
   const router = useRouter();
-  const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(null);
+  const [breadcrumbs, setBreadcrumbs] =
+    useState<Array<Breadcrumb> | null>(null);
 
   useEffect(() => {
     if (router) {
@@ -134,7 +147,10 @@ const Breadcrumbs = ({
       linkPath.shift();
 
       const pathArray = linkPath.map((path, i) => {
-        return { breadcrumb: path, href: '/' + linkPath.slice(0, i + 1).join('/') };
+        return {
+          breadcrumb: path,
+          href: '/' + linkPath.slice(0, i + 1).join('/'),
+        };
       });
 
       setBreadcrumbs(pathArray);
@@ -146,12 +162,25 @@ const Breadcrumbs = ({
   }
 
   return (
-    <nav style={containerStyle} className={containerClassName} aria-label='breadcrumbs'>
-      <ol style={listStyle} className={useDefaultStyle ? '_2jvtI' : listClassName}>
+    <nav
+      style={containerStyle}
+      className={containerClassName}
+      aria-label="breadcrumbs"
+    >
+      <ol
+        style={listStyle}
+        className={useDefaultStyle ? '_2jvtI' : listClassName}
+      >
         {!omitRootLabel && (
           <li style={inactiveItemStyle} className={inactiveItemClassName}>
-            <Link href='/'>
-              <a>{convertBreadcrumb(rootLabel || 'Home', labelsToUppercase, transformLabel)}</a>
+            <Link href="/">
+              <a>
+                {convertBreadcrumb(
+                  rootLabel || 'Home',
+                  labelsToUppercase,
+                  transformLabel
+                )}
+              </a>
             </Link>
           </li>
         )}
@@ -164,12 +193,23 @@ const Breadcrumbs = ({
               <li
                 key={breadcrumb.href}
                 className={
-                  i === breadcrumbs.length - 1 ? activeItemClassName : inactiveItemClassName
+                  i === breadcrumbs.length - 1
+                    ? activeItemClassName
+                    : inactiveItemClassName
                 }
-                style={i === breadcrumbs.length - 1 ? activeItemStyle : inactiveItemStyle}>
+                style={
+                  i === breadcrumbs.length - 1
+                    ? activeItemStyle
+                    : inactiveItemStyle
+                }
+              >
                 <Link href={breadcrumb.href}>
                   <a>
-                    {convertBreadcrumb(breadcrumb.breadcrumb, labelsToUppercase, transformLabel)}
+                    {convertBreadcrumb(
+                      breadcrumb.breadcrumb,
+                      labelsToUppercase,
+                      transformLabel
+                    )}
                   </a>
                 </Link>
               </li>

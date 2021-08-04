@@ -39,22 +39,6 @@
         "additionalHooks": "useRecoilCallback"
       }
     ],
-    "no-unused-vars": "warn",
-    "prettier/prettier": [
-      "error",
-      {
-        "bracketSpacing": true,
-        "jsxBracketSameLine": true,
-        "singleQuote": true,
-        "trailingComma": "all",
-        "tabWidth": 2,
-        "printWidth": 100,
-        "arrowParens": "avoid",
-        "requirePragma": false,
-        "insertPragma": true,
-        "endOfLine": "auto",
-        "semi": true
-      }
-    ]
+    "no-unused-vars": "warn"
   }
 }
