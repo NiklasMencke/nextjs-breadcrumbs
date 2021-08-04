@@ -21,14 +21,14 @@ const getPathFromUrl = (url: string): string => {
  * special chars to more readable chars
  *
  * @param title - The breadcrumb title
- * @returns The transformed title
+ * @returns The transformed title or the result of the custom transformLabel function
  *
  */
 const convertBreadcrumb = (
   title: string,
   toUpperCase: boolean | undefined,
-  transformLabel: ((label: string) => string) | undefined
-): string => {
+  transformLabel?: ((title: string) => React.ReactNode) | undefined
+): React.ReactNode => {
   let transformedTitle = getPathFromUrl(title);
   transformedTitle = transformedTitle
     .replace(/-/g, ' ')
@@ -37,7 +37,7 @@ const convertBreadcrumb = (
     .replace(/ue/g, 'ü')
     .replace(/\?.*/, '');
   if (transformLabel) {
-    transformedTitle = transformLabel(title);
+    return transformLabel(transformedTitle);
   }
   return toUpperCase ? transformedTitle.toUpperCase() : transformedTitle;
 };
@@ -65,8 +65,8 @@ export interface BreadcrumbsProps {
   /** Boolean indicator if the labels should be displayed as uppercase. Example: true Default: false */
   labelsToUppercase?: boolean | undefined;
 
-  /** A transformation function that allows to customize the label strings. Receives the label string and has to return a string */
-  transformLabel?: ((title: string) => string) | undefined;
+  /** A transformation function that allows to customize the label strings. Receives the label string and has to return a string or React Component */
+  transformLabel?: ((title: string) => React.ReactNode) | undefined;
 
   /** An inline style object for the outer container */
   containerStyle?: any | null;
