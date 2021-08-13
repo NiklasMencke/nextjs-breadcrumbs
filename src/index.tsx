@@ -59,7 +59,7 @@ export interface BreadcrumbsProps {
   /** The title for the very first breadcrumb pointing to the root directory. Example: '/' Default: 'HOME' */
   rootLabel?: string | null;
 
-  /** Boolean indicator whether the root label should be ommitted. Example: true Default: false */
+  /** Boolean indicator whether the root label should be omitted. Example: true Default: false */
   omitRootLabel?: boolean;
 
   /** Boolean indicator if the labels should be displayed as uppercase. Example: true Default: false */
