@@ -85,6 +85,9 @@ export interface BreadcrumbsProps {
   /** A transformation function that allows to customize the label strings. Receives the label string and has to return a string or React Component */
   transformLabel?: ((title: string) => React.ReactNode) | undefined;
 
+  /** Array containing all the indexes of the path that should be omitted and not be rendered as labels. If we have a path like '/home/category/1' then you might want to pass '[2]' here, which omits the breadcrumb label '1'. Indexes start with 0. Example: [2] Default: undefined */
+  omitIndexList?: Array<number> | undefined;
+
   /** An inline style object for the outer container */
   containerStyle?: any | null;
 
@@ -117,6 +120,7 @@ const defaultProps: BreadcrumbsProps = {
   labelsToUppercase: false,
   replaceCharacterList: [{ from: '-', to: ' ' }],
   transformLabel: undefined,
+  omitIndexList: undefined,
   containerStyle: null,
   containerClassName: '',
   listStyle: null,
@@ -147,6 +151,7 @@ const Breadcrumbs = ({
   labelsToUppercase,
   replaceCharacterList,
   transformLabel,
+  omitIndexList,
   containerStyle,
   containerClassName,
   listStyle,
@@ -207,7 +212,11 @@ const Breadcrumbs = ({
         )}
         {breadcrumbs.length >= 1 &&
           breadcrumbs.map((breadcrumb, i) => {
-            if (!breadcrumb || breadcrumb.breadcrumb.length === 0) {
+            if (
+              !breadcrumb ||
+              breadcrumb.breadcrumb.length === 0 ||
+              (omitIndexList && omitIndexList.find((value) => value === i))
+            ) {
               return;
             }
             return (
