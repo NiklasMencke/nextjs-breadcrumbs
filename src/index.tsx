@@ -27,18 +27,24 @@ const getPathFromUrl = (url: string): string => {
 const convertBreadcrumb = (
   title: string,
   toUpperCase: boolean | undefined,
+  replaceCharacterList: Array<CharacterMap> | undefined,
   transformLabel?: ((title: string) => React.ReactNode) | undefined
 ): React.ReactNode => {
   let transformedTitle = getPathFromUrl(title);
-  transformedTitle = transformedTitle
-    .replace(/-/g, ' ')
-    .replace(/oe/g, 'ö')
-    .replace(/ae/g, 'ä')
-    .replace(/ue/g, 'ü')
-    .replace(/\?.*/, '');
+
   if (transformLabel) {
     return transformLabel(transformedTitle);
   }
+
+  if (replaceCharacterList) {
+    for (let i = 0; i < replaceCharacterList.length; i++) {
+      transformedTitle = transformedTitle.replaceAll(
+        replaceCharacterList[i].from,
+        replaceCharacterList[i].to
+      );
+    }
+  }
+
   return toUpperCase ? transformedTitle.toUpperCase() : transformedTitle;
 };
 
@@ -48,6 +54,14 @@ export interface Breadcrumb {
 
   /** The URL which the breadcrumb points to. Example: 'blog/blog-entries' */
   href: string;
+}
+
+export interface CharacterMap {
+  /** The source character or character pattern that should be replaced (e.g. 'ae') */
+  from: string;
+
+  /** The replacement into which the character should be replaced. */
+  to: string;
 }
 
 export interface BreadcrumbsProps {
@@ -64,6 +78,9 @@ export interface BreadcrumbsProps {
 
   /** Boolean indicator if the labels should be displayed as uppercase. Example: true Default: false */
   labelsToUppercase?: boolean | undefined;
+
+  /** Array containing a list of specific characters that should be replaced in the label. This can be useful to convert special characters such as vowels. Example: [{ from: 'ae', to: 'ä' }, { from: '-', to: ' '}] Default: [{ from: '-', to: ' ' }] */
+  replaceCharacterList?: Array<CharacterMap> | undefined;
 
   /** A transformation function that allows to customize the label strings. Receives the label string and has to return a string or React Component */
   transformLabel?: ((title: string) => React.ReactNode) | undefined;
@@ -98,6 +115,7 @@ const defaultProps: BreadcrumbsProps = {
   rootLabel: 'Home',
   omitRootLabel: false,
   labelsToUppercase: false,
+  replaceCharacterList: [{ from: '-', to: ' ' }],
   transformLabel: undefined,
   containerStyle: null,
   containerClassName: '',
@@ -127,6 +145,7 @@ const Breadcrumbs = ({
   rootLabel,
   omitRootLabel,
   labelsToUppercase,
+  replaceCharacterList,
   transformLabel,
   containerStyle,
   containerClassName,
@@ -138,8 +157,9 @@ const Breadcrumbs = ({
   activeItemClassName,
 }: BreadcrumbsProps) => {
   const router = useRouter();
-  const [breadcrumbs, setBreadcrumbs] =
-    useState<Array<Breadcrumb> | null>(null);
+  const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(
+    null
+  );
 
   useEffect(() => {
     if (router) {
@@ -178,6 +198,7 @@ const Breadcrumbs = ({
                 {convertBreadcrumb(
                   rootLabel || 'Home',
                   labelsToUppercase,
+                  replaceCharacterList,
                   transformLabel
                 )}
               </a>
@@ -208,6 +229,7 @@ const Breadcrumbs = ({
                     {convertBreadcrumb(
                       breadcrumb.breadcrumb,
                       labelsToUppercase,
+                      replaceCharacterList,
                       transformLabel
                     )}
                   </a>
