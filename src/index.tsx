@@ -45,7 +45,8 @@ const convertBreadcrumb = (
     }
   }
 
-  return toUpperCase ? transformedTitle.toUpperCase() : transformedTitle;
+  // decode for utf-8 characters and return ascii. 
+  return toUpperCase ? decodeURI(transformedTitle).toUpperCase() : decodeURI(transformedTitle);
 };
 
 export interface Breadcrumb {
