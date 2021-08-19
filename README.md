@@ -80,6 +80,20 @@ const Example = () => {
 };
 ```
 
+## Omit certain path indexes from breadcrumb navigation
+
+It's possible to pass an array containing all the indexes of the path that should be omitted and not be rendered as labels. If we have a path like `/home/category/1` then you might want to pass `[2]` here, which omits the breadcrumb label `1`. Indexes start with 0. Example: `[2]` Default: `undefined`.
+
+```tsx
+import React from 'react';
+import Breadcrumbs from 'nextjs-breadcrumbs';
+
+// path: /nested/this-is-ommited will omit the this-is-ommited breadcrumb
+const Example = () => {
+  return <Breadcrumbs useDefaultStyle={true} omitIndexList={[1]} />;
+};
+```
+
 ## Custom styling (CSS)
 
 It's possible, to style each HTML element of this component separetely. This can be done either via inline styles or by assigning your own classes.
