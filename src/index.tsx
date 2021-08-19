@@ -27,19 +27,24 @@ const getPathFromUrl = (url: string): string => {
 const convertBreadcrumb = (
   title: string,
   toUpperCase: boolean | undefined,
+  replaceCharacterList: Array<CharacterMap> | undefined,
   transformLabel?: ((title: string) => React.ReactNode) | undefined
 ): React.ReactNode => {
   let transformedTitle = getPathFromUrl(title);
-  transformedTitle = transformedTitle
-    .replace(/-/g, ' ')
-    .replace(/oe/g, 'ö')
-    .replace(/ae/g, 'ä')
-    .replace(/ue/g, 'ü')
-    .replace(/\?.*/, '');
+
   if (transformLabel) {
     return transformLabel(transformedTitle);
   }
-  
+
+  if (replaceCharacterList) {
+    for (let i = 0; i < replaceCharacterList.length; i++) {
+      transformedTitle = transformedTitle.replaceAll(
+        replaceCharacterList[i].from,
+        replaceCharacterList[i].to
+      );
+    }
+  }
+
   // decode for utf-8 characters and return ascii. 
   return toUpperCase ? decodeURI(transformedTitle).toUpperCase() : decodeURI(transformedTitle);
 };
@@ -52,6 +57,14 @@ export interface Breadcrumb {
   href: string;
 }
 
+export interface CharacterMap {
+  /** The source character or character pattern that should be replaced (e.g. 'ae') */
+  from: string;
+
+  /** The replacement into which the character should be replaced. */
+  to: string;
+}
+
 export interface BreadcrumbsProps {
   /** If true, the default styles are used.
    * Make sure to import the CSS in _app.js
@@ -61,14 +74,20 @@ export interface BreadcrumbsProps {
   /** The title for the very first breadcrumb pointing to the root directory. Example: '/' Default: 'HOME' */
   rootLabel?: string | null;
 
-  /** Boolean indicator whether the root label should be ommitted. Example: true Default: false */
+  /** Boolean indicator whether the root label should be omitted. Example: true Default: false */
   omitRootLabel?: boolean;
 
   /** Boolean indicator if the labels should be displayed as uppercase. Example: true Default: false */
   labelsToUppercase?: boolean | undefined;
 
+  /** Array containing a list of specific characters that should be replaced in the label. This can be useful to convert special characters such as vowels. Example: [{ from: 'ae', to: 'ä' }, { from: '-', to: ' '}] Default: [{ from: '-', to: ' ' }] */
+  replaceCharacterList?: Array<CharacterMap> | undefined;
+
   /** A transformation function that allows to customize the label strings. Receives the label string and has to return a string or React Component */
   transformLabel?: ((title: string) => React.ReactNode) | undefined;
+
+  /** Array containing all the indexes of the path that should be omitted and not be rendered as labels. If we have a path like '/home/category/1' then you might want to pass '[2]' here, which omits the breadcrumb label '1'. Indexes start with 0. Example: [2] Default: undefined */
+  omitIndexList?: Array<number> | undefined;
 
   /** An inline style object for the outer container */
   containerStyle?: any | null;
@@ -100,7 +119,9 @@ const defaultProps: BreadcrumbsProps = {
   rootLabel: 'Home',
   omitRootLabel: false,
   labelsToUppercase: false,
+  replaceCharacterList: [{ from: '-', to: ' ' }],
   transformLabel: undefined,
+  omitIndexList: undefined,
   containerStyle: null,
   containerClassName: '',
   listStyle: null,
@@ -129,7 +150,9 @@ const Breadcrumbs = ({
   rootLabel,
   omitRootLabel,
   labelsToUppercase,
+  replaceCharacterList,
   transformLabel,
+  omitIndexList,
   containerStyle,
   containerClassName,
   listStyle,
@@ -140,8 +163,9 @@ const Breadcrumbs = ({
   activeItemClassName,
 }: BreadcrumbsProps) => {
   const router = useRouter();
-  const [breadcrumbs, setBreadcrumbs] =
-    useState<Array<Breadcrumb> | null>(null);
+  const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(
+    null
+  );
 
   useEffect(() => {
     if (router) {
@@ -180,6 +204,7 @@ const Breadcrumbs = ({
                 {convertBreadcrumb(
                   rootLabel || 'Home',
                   labelsToUppercase,
+                  replaceCharacterList,
                   transformLabel
                 )}
               </a>
@@ -188,7 +213,11 @@ const Breadcrumbs = ({
         )}
         {breadcrumbs.length >= 1 &&
           breadcrumbs.map((breadcrumb, i) => {
-            if (!breadcrumb || breadcrumb.breadcrumb.length === 0) {
+            if (
+              !breadcrumb ||
+              breadcrumb.breadcrumb.length === 0 ||
+              (omitIndexList && omitIndexList.find((value) => value === i))
+            ) {
               return;
             }
             return (
@@ -210,6 +239,7 @@ const Breadcrumbs = ({
                     {convertBreadcrumb(
                       breadcrumb.breadcrumb,
                       labelsToUppercase,
+                      replaceCharacterList,
                       transformLabel
                     )}
                   </a>

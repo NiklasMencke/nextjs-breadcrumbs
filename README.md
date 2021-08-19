@@ -26,7 +26,26 @@ import React from 'react';
 import Breadcrumbs from 'nextjs-breadcrumbs';
 
 const Example = () => {
-  return <Breadcrumbs useDefaultStyle rootLabel='Home' />;
+  return <Breadcrumbs useDefaultStyle rootLabel="Home" />;
+};
+```
+
+## Pass custom list of characters that should be replaced in each label
+
+By default the breadcrumb labels are generated through the url path. In many cases you might want to transform certain special characters from the path. One example would be transforming all the '.' into ' '. You can pass an array here with your preferred transformation list and the component will take care of that for you.
+
+```tsx
+import React from 'react';
+import Breadcrumbs from 'nextjs-breadcrumbs';
+
+// Before: title.to.be.transformed  After: title to be transformed
+const Example = () => {
+  return (
+    <Breadcrumbs
+      useDefaultStyle={true}
+      replaceCharacterList={[{ from: '.', to: ' ' }]}
+    />
+  );
 };
 ```
 
@@ -58,6 +77,20 @@ import Breadcrumbs from 'nextjs-breadcrumbs';
 
 const Example = () => {
   return <Breadcrumbs omitRootLabel />;
+};
+```
+
+## Omit certain path indexes from breadcrumb navigation
+
+It's possible to pass an array containing all the indexes of the path that should be omitted and not be rendered as labels. If we have a path like `/home/category/1` then you might want to pass `[2]` here, which omits the breadcrumb label `1`. Indexes start with 0. Example: `[2]` Default: `undefined`.
+
+```tsx
+import React from 'react';
+import Breadcrumbs from 'nextjs-breadcrumbs';
+
+// path: /nested/this-is-ommited will omit the this-is-ommited breadcrumb
+const Example = () => {
+  return <Breadcrumbs useDefaultStyle={true} omitIndexList={[1]} />;
 };
 ```
 
@@ -229,6 +262,7 @@ The title for the very first breadcrumb pointing to the root directory. Example:
 Defined in: [index.tsx:48](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L48)
 
 ---
+
 #### omitRootLabel
 
 • `Optional` **omitRootLabel**: _boolean_
