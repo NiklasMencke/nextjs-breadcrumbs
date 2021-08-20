@@ -98,6 +98,26 @@ const Example = () => {
 
 It's possible, to style each HTML element of this component separetely. This can be done either via inline styles or by assigning your own classes.
 
+
+## Overview of props
+| Prop name  | Description | Data type | Example | Default |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| useDefaultStyle  | If true, the default styles are used. Make sure to import the CSS in _app.js. | boolean  | true  | false  |
+| rootLabel  | The title for the very first breadcrumb pointing to the root directory.  | string  | '/'  | 'HOME'  |
+| omitRootLabel  | Boolean indicator whether the root label should be omitted. | boolean  | true  | false  |
+| labelsToUppercase  | Boolean indicator if the labels should be displayed as uppercase.  | boolean  | true  | false  |
+| replaceCharacterList  | Array containing a list of specific characters that should be replaced in the label. This can be useful to convert special characters such as vowels.  | Array<CharacterMap>  | [{ from: 'ae', to: 'ä' }, { from: '-', to: ' '}]  | [{ from: '-', to: ' ' }]  |
+| transformLabel  | A transformation function that allows to customize the label strings. Receives the label string and has to return a string or React Component.  | React.ReactNode  | (title) => 'Transformed ' + title | null  |
+| omitIndexList  | Array containing all the indexes of the path that should be omitted and not be rendered as labels. If we have a path like '/home/category/1' then you might want to pass '[2]' here, which omits the breadcrumb label '1'. Indexes start with 0.  | Array<number>  | [1]  | null  |
+| containerStyle  | An inline style object for the outer container  | Object  |   | null  |
+| containerClassName  | Classes to be used for the outer container. Won't be used if useDefaultStyle is true  | string  |   | null  |
+| listStyle  | An inline style object for the breadcrumb list  | Object  |   | null  |
+| listClassName  | Classes to be used for the breadcrumb list  | string  |   | null  |
+| inactiveItemStyle  | An inline style object for the inactive breadcrumb list item  | Object  |  | null  |
+| inactiveItemClassName  | Classes to be used for the inactive breadcrumb list item  | string  |   | null  |
+| activeItemStyle  | An inline style object for the active breadcrumb list item  | Object  |   | null  |
+| activeItemClassName  | Classes to be used for the active breadcrumb list item  | string  |   | null  |
+
 ## License
 
 MIT © [NiklasMencke](https://github.com/NiklasMencke)
