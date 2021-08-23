@@ -1,6 +1,6 @@
 /** @format */
 
-import React, { useEffect, useState } from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import './styles.css';
@@ -163,24 +163,16 @@ const Breadcrumbs = ({
   activeItemClassName,
 }: BreadcrumbsProps) => {
   const router = useRouter();
-  const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(
-    null
-  );
+  const breadcrumbs = useMemo(() => {
+    if (!router) return null;
 
-  useEffect(() => {
-    if (router) {
-      const linkPath = router.asPath.split('/');
-      linkPath.shift();
+    const linkPath = router.asPath.split('/');
+    linkPath.shift();
 
-      const pathArray = linkPath.map((path, i) => {
-        return {
-          breadcrumb: path,
-          href: '/' + linkPath.slice(0, i + 1).join('/'),
-        };
-      });
-
-      setBreadcrumbs(pathArray);
-    }
+    return linkPath.map<Breadcrumb>((path, i) => ({
+      breadcrumb: path,
+      href: '/' + linkPath.slice(0, i + 1).join('/'),
+    }));
   }, [router]);
 
   if (!breadcrumbs) {
