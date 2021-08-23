@@ -26,7 +26,26 @@ import React from 'react';
 import Breadcrumbs from 'nextjs-breadcrumbs';
 
 const Example = () => {
-  return <Breadcrumbs useDefaultStyle rootLabel='Home' />;
+  return <Breadcrumbs useDefaultStyle rootLabel="Home" />;
+};
+```
+
+## Pass custom list of characters that should be replaced in each label
+
+By default the breadcrumb labels are generated through the url path. In many cases you might want to transform certain special characters from the path. One example would be transforming all the '.' into ' '. You can pass an array here with your preferred transformation list and the component will take care of that for you.
+
+```tsx
+import React from 'react';
+import Breadcrumbs from 'nextjs-breadcrumbs';
+
+// Before: title.to.be.transformed  After: title to be transformed
+const Example = () => {
+  return (
+    <Breadcrumbs
+      useDefaultStyle={true}
+      replaceCharacterList={[{ from: '.', to: ' ' }]}
+    />
+  );
 };
 ```
 
@@ -61,9 +80,43 @@ const Example = () => {
 };
 ```
 
+## Omit certain path indexes from breadcrumb navigation
+
+It's possible to pass an array containing all the indexes of the path that should be omitted and not be rendered as labels. If we have a path like `/home/category/1` then you might want to pass `[2]` here, which omits the breadcrumb label `1`. Indexes start with 0. Example: `[2]` Default: `undefined`.
+
+```tsx
+import React from 'react';
+import Breadcrumbs from 'nextjs-breadcrumbs';
+
+// path: /nested/this-is-ommited will omit the this-is-ommited breadcrumb
+const Example = () => {
+  return <Breadcrumbs useDefaultStyle={true} omitIndexList={[1]} />;
+};
+```
+
 ## Custom styling (CSS)
 
 It's possible, to style each HTML element of this component separetely. This can be done either via inline styles or by assigning your own classes.
+
+
+## Overview of props
+| Prop name  | Description | Data type | Example | Default |
+| ------------- | ------------- | ------------- | ------------- | ------------- |
+| useDefaultStyle  | If true, the default styles are used. Make sure to import the CSS in _app.js. | boolean  | true  | false  |
+| rootLabel  | The title for the very first breadcrumb pointing to the root directory.  | string  | '/'  | 'HOME'  |
+| omitRootLabel  | Boolean indicator whether the root label should be omitted. | boolean  | true  | false  |
+| labelsToUppercase  | Boolean indicator if the labels should be displayed as uppercase.  | boolean  | true  | false  |
+| replaceCharacterList  | Array containing a list of specific characters that should be replaced in the label. This can be useful to convert special characters such as vowels.  | Array<CharacterMap>  | [{ from: 'ae', to: 'ä' }, { from: '-', to: ' '}]  | [{ from: '-', to: ' ' }]  |
+| transformLabel  | A transformation function that allows to customize the label strings. Receives the label string and has to return a string or React Component.  | React.ReactNode  | (title) => 'Transformed ' + title | null  |
+| omitIndexList  | Array containing all the indexes of the path that should be omitted and not be rendered as labels. If we have a path like '/home/category/1' then you might want to pass '[2]' here, which omits the breadcrumb label '1'. Indexes start with 0.  | Array<number>  | [1]  | null  |
+| containerStyle  | An inline style object for the outer container  | Object  |   | null  |
+| containerClassName  | Classes to be used for the outer container. Won't be used if useDefaultStyle is true  | string  |   | null  |
+| listStyle  | An inline style object for the breadcrumb list  | Object  |   | null  |
+| listClassName  | Classes to be used for the breadcrumb list  | string  |   | null  |
+| inactiveItemStyle  | An inline style object for the inactive breadcrumb list item  | Object  |  | null  |
+| inactiveItemClassName  | Classes to be used for the inactive breadcrumb list item  | string  |   | null  |
+| activeItemStyle  | An inline style object for the active breadcrumb list item  | Object  |   | null  |
+| activeItemClassName  | Classes to be used for the active breadcrumb list item  | string  |   | null  |
 
 ## License
 
@@ -229,6 +282,7 @@ The title for the very first breadcrumb pointing to the root directory. Example:
 Defined in: [index.tsx:48](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L48)
 
 ---
+
 #### omitRootLabel
 
 • `Optional` **omitRootLabel**: _boolean_
