@@ -216,7 +216,7 @@ const Breadcrumbs = ({
             if (
               !breadcrumb ||
               breadcrumb.breadcrumb.length === 0 ||
-              (omitIndexList && omitIndexList.find((value) => value === i))
+              (omitIndexList && omitIndexList.includes(i))
             ) {
               return;
             }
