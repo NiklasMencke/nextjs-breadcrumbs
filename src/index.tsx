@@ -31,11 +31,7 @@ const convertBreadcrumb = (
   transformLabel?: ((title: string) => React.ReactNode) | undefined
 ): React.ReactNode => {
   let transformedTitle = getPathFromUrl(title);
-
-  if (transformLabel) {
-    return transformLabel(transformedTitle);
-  }
-
+  
   if (replaceCharacterList) {
     for (let i = 0; i < replaceCharacterList.length; i++) {
       transformedTitle = transformedTitle.replaceAll(
@@ -43,6 +39,10 @@ const convertBreadcrumb = (
         replaceCharacterList[i].to
       );
     }
+  }
+
+  if (transformLabel) {
+    return transformLabel(transformedTitle);
   }
 
   // decode for utf-8 characters and return ascii. 
