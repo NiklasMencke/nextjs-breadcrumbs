@@ -112,7 +112,11 @@ export interface BreadcrumbsProps {
 
   /** Classes to be used for the active breadcrumb list item */
   activeItemClassName?: string;
-}
+
+  /** Classes to be used for the breadcrumb links */
+  linkClassName?: string;
+};
+
 
 const defaultProps: BreadcrumbsProps = {
   useDefaultStyle: false,
@@ -130,6 +134,7 @@ const defaultProps: BreadcrumbsProps = {
   inactiveItemClassName: '',
   activeItemStyle: null,
   activeItemClassName: '',
+  linkClassName: '',
 };
 
 /**
@@ -161,6 +166,7 @@ const Breadcrumbs = ({
   inactiveItemClassName,
   activeItemStyle,
   activeItemClassName,
+  linkClassName,
 }: BreadcrumbsProps) => {
   const router = useRouter();
   const [breadcrumbs, setBreadcrumbs] = useState<Array<Breadcrumb> | null>(
@@ -200,7 +206,7 @@ const Breadcrumbs = ({
         {!omitRootLabel && (
           <li style={inactiveItemStyle} className={inactiveItemClassName}>
             <Link href="/">
-              <a>
+              <a className={linkClassName}>
                 {convertBreadcrumb(
                   rootLabel || 'Home',
                   labelsToUppercase,
@@ -235,7 +241,7 @@ const Breadcrumbs = ({
                 }
               >
                 <Link href={breadcrumb.href}>
-                  <a>
+                  <a className={linkClassName}>
                     {convertBreadcrumb(
                       breadcrumb.breadcrumb,
                       labelsToUppercase,

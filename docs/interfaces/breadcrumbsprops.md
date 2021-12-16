@@ -111,6 +111,17 @@ Defined in: [index.tsx:63](https://github.com/NiklasMencke/nextjs-breadcrumbs/bl
 
 ___
 
+### linkClassName
+
+• `Optional` **linkClassName**: *string*
+
+Classes to be used for the breadcrumb's links
+
+Defined in: [index.tsx:66](https://github.com/NiklasMencke/nextjs-breadcrumbs/blob/40dc4f0/src/index.tsx#L137)
+
+___
+
+
 ### rootLabel
 
 • `Optional` **rootLabel**: ``null`` \| *string*
